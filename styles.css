@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Bytesized&display=swap');
+:root {
+    --background-colour: rgb(39, 39, 39);
+    --headers: rgb(138, 42, 42);
+    --text: rgb(207, 207, 207);
+    --main-font: "Bytesized", sans-serif;
+} 
+body {
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;    
+    background-color: var(--background-colour);
+    color: var(--text);
+    font-family: var(--main-font);
+}
+
+h1 {
+    color: var(--headers);
+    font-size: 90px;
+    text-shadow: 5px 5px 5px black;
+}
