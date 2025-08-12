@@ -14,6 +14,9 @@
     .container {
         grid-template-columns: 1fr;
     }
+     .card {
+    word-break: break-word;
+  }
 }
 
 body {
@@ -168,4 +171,11 @@ button:active {
   color: #fff;                      
   text-decoration: underline;        
   cursor: pointer;
+}
+.card p,
+.card li,
+.card a {
+  word-wrap: break-word;     
+  overflow-wrap: break-word; 
+  hyphens: auto;             
 }
