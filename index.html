@@ -3,10 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tkoh V7</title>
+    <title>OSRS Hub by Tkoh V7 </title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Hello, GitHub.</h1>
+    <header class="hero">
+        <div class="hero-content">
+            <h1>
+                My OSRS hub
+            </h1>
+            <p>Tracking my journey through Gielinor
+                <div id="todays-grind">
+                    Today's Grind: <span>Loading...</span>
+                </div>
+            </p>
+        </div>
+    </header>
+    <main class="page-container">
+        <aside class="left-col">
+            <section class="card" id="progress-card">
+                  <h2>
+                    Player Progress
+                </h2>
+                <p>
+                    Total Level: <span id="total-level">Loading...</span>
+                </p>
+                <button id="refresh-stats">
+                    Refresh Stats
+                </button>
+            </section>
+            <section class="card" id="drop-log">
+                <h2>
+                    Drop Tracker
+                </h2>
+                <div id="drops-container">
+                    <p>
+                        No drops yet...
+                    </p>
+                </div>
+            </section>
+            <section class="card" id="collection-log">
+                <h2>
+                    Collection Log
+                </h2>
+                <div id="collection-content">
+                    <p>
+                        Loading collection log...
+                    </p>
+                </div>
+            </section>
+        </aside>
+
+        <section class="right-col">
+            <div class="card" id="content-feed">
+                <h2>
+                    Content Feed
+                </h2>
+                <div id="content-feed-content">
+                    <p>
+                    Latest videos, Guides, Tools...
+                    </p>
+                </div>
+            </div>
+            <div class="card" id="tools-utilities">
+                <h2>
+                    Tools & Utilities
+                </h2>
+                <ul id="tools-utilities-content">
+                    <li>Bond Cost Calculator</li>
+                    <li>XP Tracker</li>
+                    <li>Profit Calculator</li>
+                </ul>
+            </div>
+        </section>
+    </main>    
+    <footer>
+        <p>
+            &copy; 2025 My OSRS Hub
+        </p>
+        <div class="easter-egg" title="Click me!">
+            🛡️
+        </div>
+    </footer>
+    <script src="myscript.js"></script>
 </body>
 </html>

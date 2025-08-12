@@ -1,0 +1,155 @@
+fetch('data.json')
+  .then(res => res.json())
+  .then(data => {
+    document.querySelector("#todays-grind span").textContent = data.todaysGrind;
+
+    const dropsContainer = document.getElementById("drops-container");
+    dropsContainer.innerHTML = "";
+
+    data.drops.forEach(drop => {
+    const dropCard = document.createElement("div");
+    dropCard.classList.add("drop-item");
+    dropCard.innerHTML = `
+        <img src="${drop.image}" alt="${drop.name}" />
+        <div class="drop-text">
+        <p>${drop.name}</p>
+        <small>${drop.date}</small>
+        </div>
+    `;
+    dropsContainer.appendChild(dropCard);
+    });
+  })
+
+  document.querySelectorAll('#tools-utilities li').forEach(item => {
+  item.style.cursor = 'pointer';
+  item.addEventListener('click', () => {
+    alert(`${item.textContent} - Coming Soon!`);
+  });
+});
+
+const username = 'Tkoh_V7'; 
+
+async function fetchTotalLevel() {
+  const totalLevelSpan = document.getElementById('total-level');
+  totalLevelSpan.textContent = 'Loading...';
+  try {
+    const response = await fetch(`https://secure.runescape.com/m=hiscore_oldschool/index_lite.ws?player=${encodeURIComponent(username)}`);
+    if (!response.ok) throw new Error('Failed to fetch hiscores');
+
+    const data = await response.text();
+    const firstLine = data.split('\n')[0];
+    const totalLevel = firstLine.split(',')[2];
+
+    totalLevelSpan.textContent = totalLevel;
+  } catch (err) {
+    console.error(err);
+    totalLevelSpan.textContent = 'Error loading';
+  }
+}
+
+document.getElementById('refresh-stats').addEventListener('click', fetchTotalLevel);
+
+fetchTotalLevel();
+
+async function loadCollectionLog() {
+  const container = document.getElementById('collection-content');
+  container.innerHTML = '<p>Loading collection log...</p>';
+
+  try {
+    const res = await fetch('collection.json');
+    if (!res.ok) throw new Error('Failed to load collection.json');
+    const data = await res.json();
+
+    if (!data.collected || data.collected.length === 0) {
+      container.innerHTML = `
+        <p>Coming Soon...</p>
+        <button id="toggle-collection">Toggle Collection Log</button>
+      `;
+      document.getElementById('toggle-collection').onclick = () => {
+        alert('Collection log is empty!');
+      };
+      return;
+    }
+
+    const collectedCount = data.collected.length;
+    container.innerHTML = `<p>Collected ${collectedCount} / ${data.total} items</p>`;
+
+    const grid = document.createElement('div');
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(100px, 1fr))';
+    grid.style.gap = '1rem';
+
+    data.collected.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'collection-item';
+
+      card.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" />
+        <p>${item.name}</p>
+      `;
+
+      grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+  } catch (e) {
+    console.error(e);
+    container.innerHTML = '<p>Error loading collection log.</p>';
+  }
+}
+window.addEventListener('DOMContentLoaded', loadCollectionLog);
+
+async function loadContentFeed() {
+  const container = document.getElementById('content-feed-content');
+  container.innerHTML = '<p>Loading content...</p>';
+
+  try {
+    const res = await fetch('content.json');
+    const data = await res.json();
+
+    if (!data.posts.length) {
+      container.innerHTML = '<p>No content available.</p>';
+      return;
+    }
+
+    const list = document.createElement('ul');
+    data.posts.forEach(post => {
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="${post.url}" target="_blank">${post.title}</a> - <small>(${post.date})</small>`;
+      list.appendChild(li);
+    });
+    container.innerHTML = '';
+    container.appendChild(list);
+  } catch {
+    container.innerHTML = '<p>Error loading content feed.</p>';
+  }
+}
+
+async function loadTools() {
+  const container = document.getElementById('tools-utilities-content');
+  container.innerHTML = '<p>Loading tools...</p>';
+
+  try {
+    const res = await fetch('tools.json');
+    const data = await res.json();
+
+    if (!data.tools.length) {
+      container.innerHTML = '<p>No tools available.</p>';
+      return;
+    }
+
+    const list = document.createElement('ul');
+    data.tools.forEach(tool => {
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="${tool.url}" target="_blank">${tool.name}</a>`;
+      list.appendChild(li);
+    });
+    container.innerHTML = '';
+    container.appendChild(list);
+  } catch {
+    container.innerHTML = '<p>Error loading tools.</p>';
+  }
+}
+
+loadContentFeed();
+loadTools();
