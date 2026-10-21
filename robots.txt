@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://tkoh-v7.com/sitemap.xml
